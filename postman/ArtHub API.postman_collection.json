@@ -1,0 +1,1296 @@
+{
+	"info": {
+		"_postman_id": "af5d2a52-dc31-454a-b972-7dd3842a3e70",
+		"name": "ArtHub API",
+		"description": "_**Описание на проекта:**_\n\n_ArtHub_ е социална платформа за история на изкуството, насочена към специалисти, художници, ученици, студенти и любители на изобразителното изкуство. Позволява на потребителите да споделят текстово и визуално съдържание, да взаимодействат помежду си и да участват в куизове в областта на история на изкуството.\n\n_**Функционалности:**_\n\n_Потребители:_\n\n- Регистрация и вход в системата;\n    \n- Роли на потребителите: _GUEST_, _USER_, _ADMIN_;\n    \n- _GUEST_ – достъп до началната страница, регистрация и логин;\n    \n- _USER_ – може да създава постове, да следва други потребители, да реагира на постове, да създава и решава куизове, да вижда рейтинги;\n    \n- _ADMIN_ – има пълни права за управление на съдържанието и потребителите;\n    \n\n_Постове:_\n\n- Качване на постове с текст и/или изображение;\n    \n- Определяне на стилова категория за всеки пост;\n    \n- Възможност за харесване и/или коментиране на постове;\n    \n- Преглед и възможност за филтриране на база стилова категория на съдържание само на последваните потребители;\n    \n\n_Взаимодействие между потребители:_\n\n- Последване на потребители;\n    \n- Премахване на последване на потребители;\n    \n\n_Куизове:_\n\n- Създаване на куизове в сферата на история на изкуството;\n    \n- Решаване на куизове, създадени от последваните потребители, за време;\n    \n- Въпроси с текст и/или изображение;\n    \n- Оценяване на всеки един въпрос с точка;\n    \n- Статистика на резултатите от решените куизове;\n    \n\n_Рейтингова система:_\n\n- Преглед на рейтинг в системата за всеки потребител;\n    \n- Рейтингът се базира на решените куизове;\n    \n- Сравняване на рейтинга с другите потребители.\n    \n\n**Разпределение на ендпойнтовете по контролери:**\n\n- AuthController (регистрация, логин, логаут и информация за логнат потребител);\n    \n- UserController (управление на потребителски профили, последвания и рейтинги);\n    \n- PostController (управление на постове и реакции);\n    \n- QuizController (създаване и решаване на куизове);\n    \n- CategoryController (преглед на категории);\n    \n- AdminController (управление на потребители, постове, куизове и категории).\n    \n\n- **AuthController** (Base URL: **/api/auth**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| ** POST /register | Регистрация на нов потребител. |\n| ** POST /login | Вход в системата. |\n| POST /logout | Изход от системата. |\n| GET /me | Връща информация за текущия влязъл в системата потребител. |\n\n** - Посочените ендпойнтове са достъпни от потребител без профил в системата (гост).\n\n- **UserController** (Base URL: **/api/users**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /{userId} | Връща профила на потребител по ID. |\n| PUT /{userId} | Обновяване на информацията в профила. |\n| POST /{userId}/follow | Последване на потребител. |\n| DELETE /{userId}/unfollow | Премахване на последване на потребител. |\n| GET /{userId}/followers | Връща списък с последователи на потребител. |\n| GET /{userId}/following | Връща списък с последваните потребители. |\n| GET /leaderboard | Връща класация на потребителите по рейтинг. |\n| GET /search?keyword={keyword} | Връща списък от потребители спрямо ключовата дума на търсене. |\n\n- **PostController** (Base URL: **/api/posts**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST / | Създаване на нов пост. |\n| GET / | Връща постове (само на последвани потребители). |\n| GET /{postId} | Връща информация за конкретен пост. |\n| DELETE /{postId} | Изтриване на пост. |\n| POST /{postId}/like | Харесване на пост. |\n| DELETE /{postId}/unlike | Премахване на харесване. |\n| POST /{postId}/comments/ | Коментиране на пост. |\n| DELETE /{postId}/comments/{commentId} | Премахване на коментар към пост. |\n| GET /categories/{categoryId} | Връща постове (само на последвани потребители), филтрирани по категория. |\n\n- **QuizController** (Base URL: **/api)**:\n    \n\n_Управление на куизове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST /quizzes/ | Създаване на нов куиз. |\n| POST /questions/ | Създаване на нов въпрос. |\n| POST /answers/ | Създаване на нов отговор. |\n| GET /quizzes/ | Връща куизове (само на последвани потребители). |\n| GET /quizzes/{quizId} | Връща информация за конкретен куиз. |\n| DELETE /quizzes/{quizId} | Изтриване на куиз. |\n\n_Решаване на куизове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST /quizzes/{quizId}/start | Стартиране на опит за решаване на куиз. |\n| POST /quizzes/{quizId}/attempts/{attemptId}/submit | Изпращане на посочените отговори при опит за решаване на куиз. |\n| GET /quizzes/results | Връща най-добрите резултати за всеки решен куиз от страна на потребителите. |\n\n- **CategoryController** (Base URL: **/api/categories**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET / | Връща списък с всички категории. |\n| GET /{categoryId} | Връща информация за конкретна категория. |\n\n- **AdminController** (Base URL: **/api/admin**):\n    \n\n_Управление на потребители:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /users/ | Връща всички потребители. |\n| DELETE /users/{userId} | Изтриване на потребител. |\n| PUT /users/{userId}/promote | Промяна на ролята на потребител. |\n\n_Управление на постове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /posts/ | Връща всички постове. |\n| DELETE /posts/{postId} | Изтриване на пост. |\n\n_Управление на куизове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /quizzes/ | Връща всички куизове. |\n| DELETE /quizzes/{quizId} | Изтриване на куиз. |\n\n_Управление на категории:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST /categories/ | Създаване на нова категория. |\n| DELETE /categories/{categoryId} | Изтриване на категория. |",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30192859"
+	},
+	"item": [
+		{
+			"name": "Auth Controller",
+			"item": [
+				{
+					"name": "Register a new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"sara\",\r\n    \"firstName\": \"Sara\",\r\n    \"lastName\": \"Ivanova\",\r\n    \"email\": \"sara@gmail.com\",\r\n    \"password\": \"abcde\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User login",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"george\",\r\n    \"password\": \"myPass01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bd4e3e7b-7379-4522-85ae-5e5012ef468e",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get authenticated user details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "db149d66-7f90-4c66-a08d-bb3dc3190653",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- **AuthController** (Base URL: **/api/auth**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| ** POST /register | Регистрация на нов потребител. |\n| ** POST /login | Вход в системата. |\n| POST /logout | Изход от системата. |\n| GET /me | Връща информация за текущия влязъл в системата потребител. |\n\n** - Посочените ендпойнтове са достъпни от потребител без профил в системата (гост)."
+		},
+		{
+			"name": "User Controller",
+			"item": [
+				{
+					"name": "Get a user by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "ce590acf-787f-4fd4-9d2b-92778728ca85",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "b37da280-ca7f-4b0d-8bec-5cd454899385",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/7. Nikol Manolova Programming PU/2024_2025/Nikol_Manolova_Course_Projects/3-course-project-arthub/materials/documents/sample-images/profile/image-girl-1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Follow a user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "a83aefca-2224-4f67-b860-d8cf9f165bf7",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/5/follow",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"5",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unfollow a user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "15133cd9-e715-409a-8cb9-2c20bc377dd8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/unfollow",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"unfollow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of user followers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "70df815f-b2fa-4c5e-a1ce-fd6337592f90",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/followers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"followers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of user following",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d676216f-1d6c-4064-aae6-aa7025b3b495",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/5/following",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"5",
+								"following"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get leaderboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "4f45417a-5f48-4989-ae48-71e670b7b400",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/leaderboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"leaderboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users by a search keyword",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d676216f-1d6c-4064-aae6-aa7025b3b495",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/search?keyword=ivan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "ivan"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- **UserController** (Base URL: **/api/users**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /{userId} | Връща профила на потребител по ID. |\n| PUT /{userId} | Обновяване на информацията в профила. |\n| POST /{userId}/follow | Последване на потребител. |\n| DELETE /{userId}/unfollow | Премахване на последване на потребител. |\n| GET /{userId}/followers | Връща списък с последователи на потребител. |\n| GET /{userId}/following | Връща списък с последваните потребители. |\n| GET /leaderboard | Връща класация на потребителите по рейтинг. |\n| GET /search?keyword={keyword} | Връща списък от потребители спрямо ключовата дума на търсене. |"
+		},
+		{
+			"name": "Post Controller",
+			"item": [
+				{
+					"name": "Create a new post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "daa17a10-8f84-4f7a-8536-618ad6af7c18",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "categoryId",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "This is an example content.",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/posts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of posts by followed users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "1af11a3f-2e39-4c5e-9972-502b40d8deca",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/posts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a post by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "91c594a2-e0a1-4788-9ae9-baeefbd8c8ef",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/posts/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "daa17a10-8f84-4f7a-8536-618ad6af7c18",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/posts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like a post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "ee49292d-0275-4e98-b0a6-de62d5e02914",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/posts/3/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								"3",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlike a post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "1af11a3f-2e39-4c5e-9972-502b40d8deca",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/posts/12/unlike",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								"12",
+								"unlike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment a post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "2d916709-6c87-4006-8f94-fbbe7f0bd671",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"Thanks for sharing with us!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/posts/17/comments/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								"17",
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a comment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "96a6699d-5b2c-41f3-bfb0-9d23cd95a17c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/posts/1/comments/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								"1",
+								"comments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of posts filtered by category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "de18c1f1-7e65-4a94-af1a-39f443a837f8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/posts/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"posts",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- **PostController** (Base URL: **/api/posts**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST / | Създаване на нов пост. |\n| GET / | Връща постове (само на последвани потребители). |\n| GET /{postId} | Връща информация за конкретен пост. |\n| DELETE /{postId} | Изтриване на пост. |\n| POST /{postId}/like | Харесване на пост. |\n| DELETE /{postId}/unlike | Премахване на харесване. |\n| POST /{postId}/comments/ | Коментиране на пост. |\n| DELETE /{postId}/comments/{commentId} | Премахване на коментар към пост. |\n| GET /categories/{categoryId} | Връща постове (само на последвани потребители), филтрирани по категория. |"
+		},
+		{
+			"name": "Quiz Controller",
+			"item": [
+				{
+					"name": "Create a quiz",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "adf65616-9c9e-42e7-b29c-672066a27689",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Guess the artist!\",\r\n    \"duration\": 10,\r\n    \"level\": \"EASY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/quizzes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"quizzes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "adf65616-9c9e-42e7-b29c-672066a27689",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "quizId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "questionContent",
+									"value": "Who is the author of Guernica?",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/questions/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"questions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create an answer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "adf65616-9c9e-42e7-b29c-672066a27689",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionId\": 3,\r\n    \"answerContent\": \"Picasso\",\r\n    \"isCorrect\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/answers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"answers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of quizzes by followed users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "5c65d681-a02b-488e-a1cf-da9fd2287719",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/quizzes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"quizzes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a quiz by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "b1a01070-f667-4d22-a7f6-40e28978cb55",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/quizzes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"quizzes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a quiz",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "c4bd2fa1-751b-4fe9-a8e3-a26e90ebd5b4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/quizzes/27",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"quizzes",
+								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start a quiz attempt",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "6347e31b-b756-4055-9ac6-4d02f06e0c99",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/quizzes/1/start",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"quizzes",
+								"1",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit a quiz attempt",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "6347e31b-b756-4055-9ac6-4d02f06e0c99",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"questionId\": 1,\r\n        \"answerId\": 1\r\n    },\r\n    {\r\n        \"questionId\": 2,\r\n        \"answerId\": 6\r\n    },\r\n    {\r\n        \"questionId\": 3,\r\n        \"answerId\": 12\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/quizzes/1/attempts/2/submit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"quizzes",
+								"1",
+								"attempts",
+								"2",
+								"submit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get top quiz results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "a9ef6836-38a3-46e6-af23-048fad881009",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/quizzes/results",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"quizzes",
+								"results"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- **QuizController** (Base URL: **/api**):\n    \n\n_Управление на куизове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST /quizzes/ | Създаване на нов куиз. |\n| POST /questions/ | Създаване на нов въпрос. |\n| POST /answers/ | Създаване на нов отговор. |\n| GET /quizzes/ | Връща куизове (само на последвани потребители). |\n| GET /quizzes/{quizId} | Връща информация за конкретен куиз. |\n| DELETE /quizzes/{quizId} | Изтриване на куиз. |\n\n_Решаване на куизове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST /quizzes/{quizId}/start | Стартиране на опит за решаване на куиз. |\n| POST /quizzes/{quizId}/attempts/{attemptId}/submit | Изпращане на посочените отговори при опит за решаване на куиз. |\n| GET /quizzes/results | Връща най-добрите резултати за всеки решен куиз от страна на потребителите. |"
+		},
+		{
+			"name": "Category Controller",
+			"item": [
+				{
+					"name": "Get a list of categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d57797f7-e89c-4923-9d6a-f72ba68a2e8a",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/categories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a category by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "36d38264-d987-4817-9ee6-e704574670e4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- **CategoryController** (Base URL: **/api/categories**):\n    \n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET / | Връща списък с всички категории. |\n| GET /{categoryId} | Връща информация за конкретна категория. |"
+		},
+		{
+			"name": "Admin Controller",
+			"item": [
+				{
+					"name": "Get a list of all users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d57797f7-e89c-4923-9d6a-f72ba68a2e8a",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "584cd012-3632-4762-ae8d-6d38ac20b5ba",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/users/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"users",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promote an admin role to a user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "daa17a10-8f84-4f7a-8536-618ad6af7c18",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/users/2/promote",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"users",
+								"2",
+								"promote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of all posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d57797f7-e89c-4923-9d6a-f72ba68a2e8a",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/posts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/posts/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"posts",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of all quizzes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d57797f7-e89c-4923-9d6a-f72ba68a2e8a",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/quizzes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"quizzes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a quiz",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d2a7f826-7853-4822-b5f5-f67f6dbfa984",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/quizzes/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"quizzes",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bd4e3e7b-7379-4522-85ae-5e5012ef468e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Baroque\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/admin/categories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "152f1397-588c-409d-943a-b3b9313f0ad1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- **AdminController** (Base URL: **/api/admin**):\n    \n\n_Управление на потребители:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /users/ | Връща всички потребители. |\n| DELETE /users/{userId} | Изтриване на потребител. |\n| PUT /users/{userId}/promote | Промяна на ролята на потребител. |\n\n_Управление на постове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /posts/ | Връща всички постове. |\n| DELETE /posts/{postId} | Изтриване на пост. |\n\n_Управление на куизове:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| GET /quizzes/ | Връща всички куизове. |\n| DELETE /quizzes/{quizId} | Изтриване на куиз. |\n\n_Управление на категории:_\n\n| **Метод и ендпойнт** | **Действие** |\n| --- | --- |\n| POST /categories/ | Създаване на нова категория. |\n| DELETE /categories/{categoryId} | Изтриване на категория. |"
+		}
+	]
+}

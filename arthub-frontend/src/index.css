@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+    --color-light-beige: #f9b164;
+    --color-beige: #f0ab60;
+    --color-dark-beige: #db9345;
+    --color-light-gray: #d2d9dc;
+    --color-light-bluish-gray: #5a7380;
+    --color-dark-bluish-gray: #3a4e58;
+    --color-brown: #36312e;
+    --color-dark-brown: #2d2622;
+}
+
+.hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+  
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.border-shadow {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.selection {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('./assets/down-arrow.svg'); 
+    background-size: 16px 16px;
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    padding-right: 30px;
+    padding-left: 10px;
+    height: 40px;
+    border: 2px solid oklch(0.872 0.01 258.338);
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+  
+.selection:focus {
+    border-color: #db9345;
+}
+  
+.selection option {
+    padding: 10px;
+}
+
+.hidden-radio {
+    display: none;
+}
+
+.custom-radio-button {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #f0ab60;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+
+.custom-radio-button .inner-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.custom-radio-button.checked {
+    background-color: #f0ab60;
+}
+
+.custom-radio-button.checked .inner-circle {
+    background-color: #fff;
+}
