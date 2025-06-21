@@ -14,16 +14,16 @@ The integration of these components seeks to foster both community engagement an
 
 <img src="https://github.com/user-attachments/assets/f13bc76e-c1cc-422d-85e9-bbea27c5b1ca" width="100%"><br>
 
-**2. ArtHub Project Structure:**<br>
+**3. ArtHub Project Structure:**<br>
 
-**2.1. Frontend:**<br>
+**3.1. Frontend:**<br>
 *- React TS, Visual Studio Code*<br>
 
 Frameworks and libraries:
 - Tailwind CSS
 - Formik & Yup
 
-**2.2. Backend:**<br>
+**3.2. Backend:**<br>
 *- Spring Boot Rest API, IntelliJ IDEA*<br>
 
 Dependencies:
