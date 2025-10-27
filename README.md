@@ -2,7 +2,7 @@
 **Frontend & Backend Course Project**<br>
 
 ArtHub is a social platform designed to facilitate knowledge exchange in the field of art history.
-Given the discipline’s diverse range of styles, movements, and theoretical frameworks, art history offers critical insights into the cultural development of humanity across centuries.
+Given the discipline's diverse range of styles, movements, and theoretical frameworks, art history offers critical insights into the cultural development of humanity across centuries.
 The platform serves professionals, artists, students, scholars, and visual art enthusiasts by combining interactive social networking features with educational tools such as quiz-based learning modules.
 The integration of these components seeks to foster both community engagement and structured knowledge acquisition within the domain of art history.
 
