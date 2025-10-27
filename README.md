@@ -8,7 +8,7 @@ The integration of these components seeks to foster both community engagement an
 
 **1. Use Case Diagram:**<br>
 
-<img src="https://github.com/user-attachments/assets/389f971f-8c64-4b07-8c6b-a06d812c26ed" width="100%"><br>
+<img src="https://github.com/user-attachments/assets/b0432220-5c07-4a1b-b66e-29e249c9d01f" width="100%"><br>
 
 **2. Entity Relationship Diagram:**<br>
 
